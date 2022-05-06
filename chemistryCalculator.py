@@ -2,9 +2,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1-beta.0.0")
-print()
-print("*****THIS IS A BETA VERSION*****")
+print("Version 1.0.0")
 print()
 #Notes:
 #Code for molar mass calculations was created by @elibroftw on GitHub can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
@@ -428,7 +426,7 @@ while True:
         print("2 = Charles' Law (Volume and Temperature)")
         print("3 = Gay-Lussac's Law (Pressure and Temperature)")
         print("4 = Avogadro's Law (Volume and Moles)")
-        print("5 = Combined Gas Law")
+        print("5 = Combined Gas Law (Volume, Pressure, and Temperature)")
         print("6 = Ideal Gas Law")
 
         while True:
@@ -592,14 +590,3 @@ while True:
                     GLIGLA = (((GLIGLP*GLIGLV)/(R*GLIGLM)))
                     print()
                     print(GLIGLA, "is the temperature.")
-
-
-
-#Chuck needs a GF
-
-#Never gonna give you up
-#Never gonna let you down
-#Never gonna run around and desert you
-#Never gonna make you cry
-#Never gonna say goodbye
-#Never gonna tell a lie and hurt you
