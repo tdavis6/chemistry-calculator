@@ -2,7 +2,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.0.0")
+print("Version 1.0.1")
 print()
 #Notes:
 #Code for molar mass calculations was created by @elibroftw on GitHub can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
@@ -29,6 +29,7 @@ MM_of_Elements = {'H': 1.00794, 'He': 4.002602, 'Li': 6.941, 'Be': 9.012182, 'B'
                   '': 0}
 while True:
     #Get type of calculation
+    print()
     print()
     print("Main Menu")
     print()
@@ -326,7 +327,7 @@ while True:
                 DM2 = float(input("Enter the value of the final molarity (M2): "))
                 DANS2 = ((DM1*DV1)/DM2)
                 print()
-                print(DANS2, "is the final molarity.")
+                print(DANS2, "is the final volume.")
                 print()
 
 
@@ -347,7 +348,6 @@ while True:
         print("12 = OH- Concentration to H+ Concentration")
         print()
         while True:
-            print()
             pHtype = int(input("Enter the number of the conversion shown above that you would like to be done, or \"0\" to quit: "))
             #option to quit
             if pHtype == 0:
