@@ -305,7 +305,6 @@ while True:
 
     if calculationType == 4:
         print()
-        print("Note: Please use liters for volume and moles for molarity.")
         print("1 = Molarity")
         print("2 = Volume")
         print()
@@ -314,6 +313,7 @@ while True:
             if DType == 0:
                 break
             if DType == 1:
+                print("Note: Please use liters for volume.")
                 DM1 = float(input("Enter the value of the initial molarity (M1): "))
                 DV1 = float(input("Enter the value of the initial volume (V1): "))
                 DV2 = float(input("Enter the value of the final volume (V2): "))
@@ -322,6 +322,7 @@ while True:
                 print(DANS1, "is the final molarity.")
                 print()
             if DType == 2:
+                print("Note: Please use liters for volume.")
                 DM1 = float(input("Enter the value of the initial molarity (M1): "))
                 DV1 = float(input("Enter the value of the initial volume (V1): "))
                 DM2 = float(input("Enter the value of the final molarity (M2): "))
