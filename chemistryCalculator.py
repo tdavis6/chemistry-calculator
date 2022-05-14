@@ -2,8 +2,9 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.0.1")
+print("Version 1.1.0")
 print()
+print("Provided under the MIT License, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
 #Code for molar mass calculations was created by @elibroftw on GitHub can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
 #
@@ -27,6 +28,7 @@ MM_of_Elements = {'H': 1.00794, 'He': 4.002602, 'Li': 6.941, 'Be': 9.012182, 'B'
                   'No': 259.1009, 'Lr': 262, 'Rf': 267, 'Db': 268, 'Sg': 271, 'Bh': 270, 'Hs': 269, 'Mt': 278,
                   'Ds': 281, 'Rg': 281, 'Cn': 285, 'Nh': 284, 'Fl': 289, 'Mc': 289, 'Lv': 292, 'Ts': 294, 'Og': 294,
                   '': 0}
+
 while True:
     #Get type of calculation
     print()
@@ -39,12 +41,16 @@ while True:
     print("4 = Dilution Calculations")
     print("5 = pH/pOH/H+ Concentration/OH- Concentration Converter")
     print("6 = Gas Law Calculations")
+    print("7 = Calorimetry Calculations")
     print()
     calculationType = int(input("Enter the number of the calculation shown above that you would like to be completed, or \"0\" to quit: "))
     #Go to calculation type
     if calculationType == 0:
         break
 
+    if (calculationType != 0) & (calculationType != 1) & (calculationType != 2) & (calculationType != 3) & (calculationType != 4) & (calculationType != 5) & (calculationType != 6) & (calculationType != 7):
+        print()
+        print("Please enter a valid option.")
 
     if calculationType == 1:
         while True:
@@ -106,7 +112,6 @@ while True:
                     print()
                     print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
 
-
     if calculationType == 2:
         #List number types
         print()
@@ -134,6 +139,10 @@ while True:
             print()
             SType = int(input("Enter the number of the variable that you would like to find, or \"0\" to quit: "))
             print()
+            if (SType != 1) & (SType != 2) & (SType != 3) & (SType != 4) & (SType != 5) & (SType != 6) & (SType != 7) & (SType != 8) & (SType != 9) & (SType != 10) & (SType != 11) & (SType != 12) & (SType != 13) & (SType != 14) & (SType != 15) & (SType != 16):
+                print()
+                print("Please enter a valid option.")
+                print()
             if SType == 0:
                 break
             #Code for molar mass calculations can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
@@ -187,6 +196,7 @@ while True:
                 # OPTIONS
                 DECIMAL_PLACES = 20
 
+            if (SType == 1) or (SType == 2) or (SType == 3) or (SType == 4) or (SType == 5) or (SType == 6) or (SType == 7) or (SType == 8) or (SType == 9) or (SType == 10) or (SType == 11) or (SType == 12) or (SType == 13) or (SType == 14) or (SType == 15) or (SType == 16):
                 if (SType == 1) or (SType == 2) or (SType == 3) or (SType == 4):
                     SFormula1 = input('Enter the first (X) compound formula (please capitalize elements, eg. Mn instead of mn): ')
                 SCoefficient1 = int(input("What is the coefficient of the first (X) compount (Please make sure the reaction is balanced)? "))
@@ -268,7 +278,6 @@ while True:
                     print()
                     print("There will be", SType16ANS, "liters of", SFormula2 + '.')
 
-
     if calculationType == 3:
     # Get the number to solve for
         print()
@@ -278,9 +287,12 @@ while True:
         print()
         while True:
             #Get type of calculation
-            MType = int(input("Enter the number of the number that you would like to find, or \"0\" to quit: "))
+            MType = int(input("Enter the number of the variable that you would like to find, or \"0\" to quit: "))
             print()
             #Do the calculation
+            if (MType != 0) & (MType != 1) & (MType != 2) & (MType != 3):
+                print("Please enter a valid option.")
+                print()
             if MType == 0:
                 break
             if MType == 1:
@@ -302,7 +314,6 @@ while True:
                 print()
                 print("There is", MLitersOfSolution, "liters of solution.")
 
-
     if calculationType == 4:
         print()
         print("1 = Molarity")
@@ -310,6 +321,10 @@ while True:
         print()
         while True:
             DType = int(input("Enter the number of the variable you would like to solve for, or \"0\" to quit: "))
+            print()
+            if (DType != 0) & (DType != 1) & (DType != 2):
+                print("Please enter a valid option.")
+                print()
             if DType == 0:
                 break
             if DType == 1:
@@ -330,7 +345,6 @@ while True:
                 print()
                 print(DANS2, "is the final volume.")
                 print()
-
 
     if calculationType == 5:
         # Get type of conversion
@@ -353,8 +367,51 @@ while True:
             #option to quit
             if pHtype == 0:
                 break
+            #Set names of variables for questions
+            if pHtype == 1:
+                pHV1 = str("pH")
+                pHV2 = str("pOH")
+            if pHtype == 2:
+                pHV1 = str("pOH")
+                pHV2 = str("pH")
+            if pHtype == 3:
+                pHV1 = str("pH")
+                pHV2 = str("H+ Concentration")
+            if pHtype == 4:
+                pHV1 = str("H+ Concentration")
+                pHV2 = str("pH")
+            if pHtype == 5:
+                pHV1 = str("pH")
+                pHV2 = str("OH- Concentration")
+            if pHtype == 6:
+                pHV1 = str("OH- Concentration")
+                pHV2 = str("pH")
+            if pHtype == 7:
+                pHV1 = str("pOH")
+                pHV2 = str("OH- Concentration")
+            if pHtype == 8:
+                pHV1 = str("OH- Concentration")
+                pHV2 = str("pOH")
+            if pHtype == 9:
+                pHV1 = str("pOH")
+                pHV2 = str("H+ Concentration")
+            if pHtype == 10:
+                pHV1 = str("H+ Concentration")
+                pHV2 = str("pOH")
+            if pHtype == 11:
+                pHV1 = str("H+ Concentration")
+                pHV2 = str("OH- Concentration")
+            if pHtype == 12:
+                pHV1 = str("OH- Concentration")
+                pHV2 = str("H+ Concentration")
             #get both numbers
-            pHnumber = float(input("What is the number that you would like to convert? "))
+            if (pHtype == 0) or (pHtype == 1) or (pHtype == 2) or (pHtype == 3) or (pHtype == 4) or (pHtype == 5) or (pHtype == 6) or (pHtype == 7) or (pHtype == 8) or (pHtype == 9) or (pHtype == 10) or (pHtype == 11) or (pHtype == 12):
+                pHnumber1 = input("Enter the value of " + pHV1 + " that you would like to convert to " + pHV2 + ": ")
+                pHnumber = float(pHnumber1)
+            if (pHtype != 0) & (pHtype != 1) & (pHtype != 2) & (pHtype != 3) & (pHtype != 4) & (pHtype != 5) & (pHtype != 6) & (pHtype != 7) & (pHtype != 8) & (pHtype != 9) & (pHtype != 10) & (pHtype != 11) & (pHtype != 12):
+                print()
+                print("Please enter a valid option.")
+                print()
             #type 1
             if pHtype == 1:
                 pHanswer1 = 14-pHnumber
@@ -420,7 +477,6 @@ while True:
                 print()
                 print(pHanswer12, "is the H+ Concentration.")
 
-
     if calculationType == 6:
         print()
         print("1 = Boyle's Law (Pressure and Volume)")
@@ -432,7 +488,11 @@ while True:
 
         while True:
             print()
-            GLType = int((input("Enter the number of the gas law calculation shown above that you would like to be done, or \"0\" to quit: ")))
+            GLType = int(input("Enter the number of the gas law calculation shown above that you would like to be done, or \"0\" to quit: "))
+            if (GLType != 0) & (GLType != 1) & (GLType != 2) & (GLType != 3) & (GLType != 4) & (GLType != 5) & (GLType != 6):
+                print()
+                print("Please enter a valid option.")
+                print()
             if GLType == 0:
                 break
             if GLType == 1:
@@ -441,6 +501,9 @@ while True:
                 print("1 = Pressure")
                 print("2 = Volume")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
+                if (GLType2 != 1) & (GLType2 != 2):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLType2P1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2V1 = float(input("Enter the value of the first volume variable (V1): "))
@@ -462,6 +525,9 @@ while True:
                 print("2 = Temperature")
                 print()
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
+                if (GLType2 != 1) & (GLType2 != 2):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLType2V1 = float(input("Enter the value of the first volume variable (V1): "))
                     GLType2T1 = float(input("Enter the value of the first temperature variable (T1)(make sure the temperature is in kelvin): "))
@@ -483,6 +549,9 @@ while True:
                 print("2 = Temperature")
                 print()
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
+                if (GLType2 != 1) & (GLType2 != 2):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLType2P1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2T1 = float(input("Enter the value of the first temperature variable (V1)(make sure the temperature is in kelvin): "))
@@ -504,6 +573,9 @@ while True:
                 print("2 = Moles")
                 print()
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
+                if (GLType2 != 1) & (GLType2 != 2):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLType2V1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2M1 = float(input("Enter the value of the first amount of moles (M1): "))
@@ -526,6 +598,9 @@ while True:
                 print("3 = Temperature")
                 print()
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
+                if (GLType2 != 1) & (GLType2 != 2) & (GLType2 !=3):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLP1 = float(input("Enter the initial pressure: "))
                     GLV1 = float(input("Enter the initial volume: "))
@@ -563,6 +638,9 @@ while True:
                 print()
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 R = float(0.082057366080960)
+                if (GLType2 != 1) & (GLType2 != 2) & (GLType2 !=3) & (GLType2 != 4):
+                    print("Please enter a valid option.")
+                    print()
                 if GLType2 == 1:
                     GLIGLV = float(input("Enter the volume of the gas: "))
                     GLIGLM = float(input("Enter the amount of moles of the gas: "))
@@ -591,3 +669,48 @@ while True:
                     GLIGLA = (((GLIGLP*GLIGLV)/(R*GLIGLM)))
                     print()
                     print(GLIGLA, "is the temperature.")
+
+    if calculationType == 7:
+        print()
+        print("1 = Total Heat Energy Transferred")
+        print("2 = Mass")
+        print("3 = Specific Heat Capacity")
+        print("4 = Change in Temperature")
+
+        while True:
+            print()
+            CType = int(input("Enter the number of the calorimetry calculation shown above that you would like to be done, or \"0\" to quit: "))
+            if (CType != 0) & (CType != 1) & (CType != 2) & (CType != 3) & (CType != 4):
+                print()
+                print("Please enter a valid option.")
+                print()
+            if CType == 0:
+                break
+            if CType == 1:
+                CMass = float(input("Enter the mass (grams) of the substance that was exposed to the heat (usually water): "))
+                CSHC = float(input("Enter the specific heat capacity of the substance that was exposed to the heat (usually water): "))
+                CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius) of the substance that was exposed to the heat (usually water): "))
+                CAns = str(CMass * CSHC * CHiT)
+                print()
+                print("The total heat energy transferred is", CAns + " joules.")
+            if CType == 2:
+                CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
+                CSHC = float(input("Enter the specific heat capacity of the substance that was exposed to the heat (usually water): "))
+                CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius)of the substance that was exposed to the heat (usually water): "))
+                CAns = str((CSHC * CHiT)/CTHE)
+                print()
+                print("The mass of the substance that was exposed to the heat is", CAns + " grams.")
+            if CType == 3:
+                CMass = float(input("Enter the mass (grams) of the substance that was exposed to the heat (usually water): "))
+                CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
+                CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius)of the substance that was exposed to the heat (usually water): "))
+                CAns = str(CTHE/(CMass * CHiT))
+                print()
+                print("The specific heat capacity of the substance that was exposed to the heat is", CAns + " J/g.")
+            if CType == 4:
+                CMass = float(input("Enter the mass (grams) of the substance that was exposed to the heat (usually water): "))
+                CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
+                CSHC = float(input("Enter the specific heat capacity (J/g of the substance that was exposed to the heat (usually water): "))
+                CAns = str(CTHE/(CMass * CSHC))
+                print()
+                print("The change in temperature is", CAns + " degrees kelvin/celsius.")
