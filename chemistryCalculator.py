@@ -1,12 +1,28 @@
+#  Copyright 2022 Tyler Davis
+
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+
+#      https://www.apache.org/licenses/LICENSE-2.0
+
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+
 import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.1.0")
+print("Version 1.2.0")
 print()
-print("Provided under the MIT License, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
+print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
 #Code for molar mass calculations was created by @elibroftw on GitHub can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
+#Variables are the first letter of the calculation type, followed by what value they contain (eg. GLType = Gas Law Type and CMass = Calorimetry Mass)
 #
 #Define Molar Masses of Elements
 MM_of_Elements = {'H': 1.00794, 'He': 4.002602, 'Li': 6.941, 'Be': 9.012182, 'B': 10.811, 'C': 12.0107, 'N': 14.0067,
@@ -42,15 +58,16 @@ while True:
     print("5 = pH/pOH/H+ Concentration/OH- Concentration Converter")
     print("6 = Gas Law Calculations")
     print("7 = Calorimetry Calculations")
+    print("8 = Equilibrium Calculations")
     print()
     calculationType = int(input("Enter the number of the calculation shown above that you would like to be completed, or \"0\" to quit: "))
     #Go to calculation type
-    if calculationType == 0:
-        break
-
-    if (calculationType != 0) & (calculationType != 1) & (calculationType != 2) & (calculationType != 3) & (calculationType != 4) & (calculationType != 5) & (calculationType != 6) & (calculationType != 7):
+    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8):
         print()
         print("Please enter a valid option.")
+
+    if calculationType == 0:
+        break
 
     if calculationType == 1:
         while True:
@@ -714,3 +731,165 @@ while True:
                 CAns = str(CTHE/(CMass * CSHC))
                 print()
                 print("The change in temperature is", CAns + " degrees kelvin/celsius.")
+
+    if calculationType == 8:
+        print()
+        print("1 = Equilibrium Constant for Concentration")
+        print("2 = Equilibrium Constant for Pressure")
+        print()
+        while True:
+            EType = int(input("Enter the number of the calculation that you would like to perform, or \"0\" to quit: "))
+
+            # Code for molar mass calculations can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
+            def molar_mass(compound: str, decimal_places=None) -> float:
+                is_polyatomic = end = multiply = False
+                polyatomic_mass, m_m, multiplier = 0, 0, 1
+                element = ''
+
+                for e in compound:
+                    if is_polyatomic:
+                        if end:
+                            is_polyatomic = False
+                            m_m += int(e) * polyatomic_mass if e.isdigit() else polyatomic_mass + MM_of_Elements[e]
+                        elif e.isdigit():
+                            multiplier = int(str(multiplier) + e) if multiply else int(e)
+                            multiply = True
+                        elif e.islower():
+                            element += e
+                        elif e.isupper():
+                            polyatomic_mass += multiplier * MM_of_Elements[element]
+                            element, multiplier, multiply = e, 1, False
+                        elif e == ')':
+                            polyatomic_mass += multiplier * MM_of_Elements[element]
+                            element, multiplier = '', 1
+                            end, multiply = True, False
+                    elif e == '(':
+                        m_m += multiplier * MM_of_Elements[element]
+                        element, multiplier = '', 1
+                        is_polyatomic, multiply = True, False
+                    elif e.isdigit():
+                        multiplier = int(str(multiplier) + e) if multiply else int(e)
+                        multiply = True
+                    elif e.islower():
+                        element += e
+                    elif e.isupper():
+                        m_m += multiplier * MM_of_Elements[element]
+                        element, multiplier, multiply = e, 1, False
+                m_m += multiplier * MM_of_Elements[element]
+                if decimal_places is not None:
+                    return round(m_m, decimal_places)
+                return m_m
+
+            if __name__ == '__main__':
+                # TESTS
+                assert molar_mass('H') == 1.00794
+                assert 18.015 < molar_mass('H2O') < 18.016
+                assert 98.07 < molar_mass('H2SO4') < 98.08
+                assert 386 < molar_mass('CF3OCF(CF3)CF2OCF2OCF3') < 386.1
+                assert 159.6 < molar_mass('Fe2O3') < 159.7
+                # OPTIONS
+                DECIMAL_PLACES = 20
+                # Format prints like this:
+                # print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
+
+            if (EType != 0) & (EType != 1) & (EType != 2) & (EType != 3) & (EType != 4):
+                print()
+                print("Please enter a valid option.")
+                print()
+
+            if EType == 0:
+                break
+            if EType == 1:
+                print()
+                ECount1 = int(input("Enter the total number of different reactants in the equation: "))
+                ECount2 = int(input("Enter the total number of different products in the equation: "))
+                print()
+                EDummy1 = 1
+                EDummy2 = 1
+                EC1 = None
+                EC2 = None
+                ECon1 = None
+                ECon2 = None
+                ERea = None
+                EPro = None
+                while EDummy1 <= ECount1:
+                    if EDummy1 == 1:
+                        wordAns = str("1st")
+                    if EDummy1 == 2:
+                        wordAns = str("2nd")
+                    if EDummy1 >= 3:
+                        wordAns = str("3rd")
+                    if EDummy1 >= 4:
+                        wordAns = str(str(EDummy1) + "th")
+                    EC1 = int(input("Enter the coefficient of the " + wordAns + " reactant: "))
+                    ECon1 = float(input("Enter the concentration (molarity) of the " + wordAns + " reactant: "))
+                    if ERea == None:
+                        ERea = 1
+                    ERea = float(ERea * (ECon1 ** float(EC1)))
+                    EDummy1 = EDummy1 + 1
+                while EDummy2 <= ECount2:
+                    if EDummy2 == 1:
+                        wordAns = str("1st")
+                    if EDummy2 == 2:
+                        wordAns = str("2nd")
+                    if EDummy2 == 3:
+                        wordAns = str("3rd")
+                    if EDummy2 >= 4:
+                        wordAns = str(str(EDummy2) + "th")
+                    EC2 = int(input("Enter the coefficient of the " + wordAns + " product: "))
+                    ECon2 = float(input("Enter the cocentration (molarity) of the " + wordAns + " product: "))
+                    if EPro == None:
+                        EPro = 1
+                    EPro = float(EPro * (ECon2 ** float(EC2)))
+                    EDummy2 = EDummy2 + 1
+                EType1ANS = str(float(EPro) / float(ERea))
+                print()
+                print("The equilibrium constant of the concentration (Kc) of this reaction is " + EType1ANS + ".")
+                print()
+            if EType == 2:
+                print()
+                ECount1 = int(input("Enter the total number of different reactants in the equation: "))
+                ECount2 = int(input("Enter the total number of different products in the equation: "))
+                print()
+                EDummy1 = 1
+                EDummy2 = 1
+                EC1 = None
+                EC2 = None
+                ECon1 = None
+                ECon2 = None
+                ERea = None
+                EPro = None
+                while EDummy1 <= ECount1:
+                    if EDummy1 == 1:
+                        wordAns = str("1st")
+                    if EDummy1 == 2:
+                        wordAns = str("2nd")
+                    if EDummy1 >= 3:
+                        wordAns = str("3rd")
+                    if EDummy1 >= 4:
+                        wordAns = str(str(EDummy1) + "th")
+                    EC1 = int(input("Enter the coefficient of the " + wordAns + " reactant: "))
+                    EPre1 = float(input("Enter the pressure in atm of the " + wordAns + " reactant: "))
+                    if ERea == None:
+                        ERea = 1
+                    ERea = float(ERea * (EPre1 ** float(EC1)))
+                    EDummy1 = EDummy1 + 1
+                while EDummy2 <= ECount2:
+                    if EDummy2 == 1:
+                        wordAns = str("1st")
+                    if EDummy2 == 2:
+                        wordAns = str("2nd")
+                    if EDummy2 == 3:
+                        wordAns = str("3rd")
+                    if EDummy2 >= 4:
+                        wordAns = str(str(EDummy2) + "th")
+                    EC2 = int(input("Enter the coefficient of the " + wordAns + " product: "))
+                    EPre2 = float(input("Enter the pressure in atm of the " + wordAns + " product: "))
+                    if EPro == None:
+                        EPro = 1
+                    EPro = float(EPro * (EPre2 ** float(EC2)))
+                    EDummy2 = EDummy2 + 1
+                EType1ANS = str(float(EPro) / float(ERea))
+                print()
+                print("The equilibrium constant of the pressure (Kp) of this reaction is " + EType1ANS + ".")
+                print()
