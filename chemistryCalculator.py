@@ -792,7 +792,7 @@ while True:
                 # Format prints like this:
                 # print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
 
-            if (EType != 0) & (EType != 1) & (EType != 2) & (EType != 3) & (EType != 4):
+            if (EType != 0) & (EType != 1) & (EType != 2):
                 print()
                 print("Please enter a valid option.")
                 print()
