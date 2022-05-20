@@ -17,7 +17,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.2.0")
+print("Version 1.2.1")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
@@ -739,59 +739,6 @@ while True:
         print()
         while True:
             EType = int(input("Enter the number of the calculation that you would like to perform, or \"0\" to quit: "))
-
-            # Code for molar mass calculations can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
-            def molar_mass(compound: str, decimal_places=None) -> float:
-                is_polyatomic = end = multiply = False
-                polyatomic_mass, m_m, multiplier = 0, 0, 1
-                element = ''
-
-                for e in compound:
-                    if is_polyatomic:
-                        if end:
-                            is_polyatomic = False
-                            m_m += int(e) * polyatomic_mass if e.isdigit() else polyatomic_mass + MM_of_Elements[e]
-                        elif e.isdigit():
-                            multiplier = int(str(multiplier) + e) if multiply else int(e)
-                            multiply = True
-                        elif e.islower():
-                            element += e
-                        elif e.isupper():
-                            polyatomic_mass += multiplier * MM_of_Elements[element]
-                            element, multiplier, multiply = e, 1, False
-                        elif e == ')':
-                            polyatomic_mass += multiplier * MM_of_Elements[element]
-                            element, multiplier = '', 1
-                            end, multiply = True, False
-                    elif e == '(':
-                        m_m += multiplier * MM_of_Elements[element]
-                        element, multiplier = '', 1
-                        is_polyatomic, multiply = True, False
-                    elif e.isdigit():
-                        multiplier = int(str(multiplier) + e) if multiply else int(e)
-                        multiply = True
-                    elif e.islower():
-                        element += e
-                    elif e.isupper():
-                        m_m += multiplier * MM_of_Elements[element]
-                        element, multiplier, multiply = e, 1, False
-                m_m += multiplier * MM_of_Elements[element]
-                if decimal_places is not None:
-                    return round(m_m, decimal_places)
-                return m_m
-
-            if __name__ == '__main__':
-                # TESTS
-                assert molar_mass('H') == 1.00794
-                assert 18.015 < molar_mass('H2O') < 18.016
-                assert 98.07 < molar_mass('H2SO4') < 98.08
-                assert 386 < molar_mass('CF3OCF(CF3)CF2OCF2OCF3') < 386.1
-                assert 159.6 < molar_mass('Fe2O3') < 159.7
-                # OPTIONS
-                DECIMAL_PLACES = 20
-                # Format prints like this:
-                # print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
-
             if (EType != 0) & (EType != 1) & (EType != 2):
                 print()
                 print("Please enter a valid option.")
