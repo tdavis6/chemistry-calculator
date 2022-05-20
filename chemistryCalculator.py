@@ -734,10 +734,11 @@ while True:
 
     if calculationType == 8:
         print()
-        print("1 = Equilibrium Constant")
+        print("1 = Equilibrium Constant for Concentration")
+        print("2 = Equilibrium Constant for Pressure")
         print()
         while True:
-            EType = int(input("Enter the number of the calculations that you would like to perform, or \"0\" to quit: "))
+            EType = int(input("Enter the number of the calculation that you would like to perform, or \"0\" to quit: "))
 
             # Code for molar mass calculations can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
             def molar_mass(compound: str, decimal_places=None) -> float:
@@ -821,10 +822,10 @@ while True:
                     if EDummy1 >= 4:
                         wordAns = str(str(EDummy1) + "th")
                     EC1 = int(input("Enter the coefficient of the " + wordAns + " reactant: "))
-                    ECon1 = int(input("Enter the concentration of the " + wordAns + " reactant: "))
+                    ECon1 = float(input("Enter the concentration of the " + wordAns + " reactant: "))
                     if ERea == None:
                         ERea = 1
-                    ERea = float(ERea * (ECon1 ** EC1))
+                    ERea = float(ERea * (ECon1 ** float(EC1)))
                     EDummy1 = EDummy1 + 1
                 while EDummy2 <= ECount2:
                     if EDummy2 == 1:
@@ -836,11 +837,59 @@ while True:
                     if EDummy2 >= 4:
                         wordAns = str(str(EDummy2) + "th")
                     EC2 = int(input("Enter the coefficient of the " + wordAns + " product: "))
-                    ECon2 = int(input("Enter the cocentration of the " + wordAns + " product: "))
+                    ECon2 = float(input("Enter the cocentration of the " + wordAns + " product: "))
                     if EPro == None:
                         EPro = 1
-                    EPro = float(EPro * (ECon2 ** EC2))
+                    EPro = float(EPro * (ECon2 ** float(EC2)))
                     EDummy2 = EDummy2 + 1
-                EType1ANS = str(EPro / ERea)
+                EType1ANS = str(float(EPro) / float(ERea))
                 print()
-                print("The equilibrium constant of this reaction is " + EType1ANS + ".")
+                print("The equilibrium constant of the concentration (Kc) of this reaction is " + EType1ANS + ".")
+                print()
+            if EType == 2:
+                print()
+                ECount1 = int(input("Enter the total number of different reactants in the equation: "))
+                ECount2 = int(input("Enter the total number of different products in the equation: "))
+                print()
+                EDummy1 = 1
+                EDummy2 = 1
+                EC1 = None
+                EC2 = None
+                ECon1 = None
+                ECon2 = None
+                ERea = None
+                EPro = None
+                while EDummy1 <= ECount1:
+                    if EDummy1 == 1:
+                        wordAns = str("1st")
+                    if EDummy1 == 2:
+                        wordAns = str("2nd")
+                    if EDummy1 >= 3:
+                        wordAns = str("3rd")
+                    if EDummy1 >= 4:
+                        wordAns = str(str(EDummy1) + "th")
+                    EC1 = int(input("Enter the coefficient of the " + wordAns + " reactant: "))
+                    EPre1 = float(input("Enter the pressure in atm of the " + wordAns + " reactant: "))
+                    if ERea == None:
+                        ERea = 1
+                    ERea = float(ERea * (EPre1 ** float(EC1)))
+                    EDummy1 = EDummy1 + 1
+                while EDummy2 <= ECount2:
+                    if EDummy2 == 1:
+                        wordAns = str("1st")
+                    if EDummy2 == 2:
+                        wordAns = str("2nd")
+                    if EDummy2 == 3:
+                        wordAns = str("3rd")
+                    if EDummy2 >= 4:
+                        wordAns = str(str(EDummy2) + "th")
+                    EC2 = int(input("Enter the coefficient of the " + wordAns + " product: "))
+                    EPre2 = float(input("Enter the pressure in atm of the " + wordAns + " product: "))
+                    if EPro == None:
+                        EPro = 1
+                    EPro = float(EPro * (EPre2 ** float(EC2)))
+                    EDummy2 = EDummy2 + 1
+                EType1ANS = str(float(EPro) / float(ERea))
+                print()
+                print("The equilibrium constant of the pressure (Kp) of this reaction is " + EType1ANS + ".")
+                print()
