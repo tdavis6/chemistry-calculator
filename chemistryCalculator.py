@@ -822,7 +822,7 @@ while True:
                     if EDummy1 >= 4:
                         wordAns = str(str(EDummy1) + "th")
                     EC1 = int(input("Enter the coefficient of the " + wordAns + " reactant: "))
-                    ECon1 = float(input("Enter the concentration of the " + wordAns + " reactant: "))
+                    ECon1 = float(input("Enter the concentration (molarity) of the " + wordAns + " reactant: "))
                     if ERea == None:
                         ERea = 1
                     ERea = float(ERea * (ECon1 ** float(EC1)))
@@ -837,7 +837,7 @@ while True:
                     if EDummy2 >= 4:
                         wordAns = str(str(EDummy2) + "th")
                     EC2 = int(input("Enter the coefficient of the " + wordAns + " product: "))
-                    ECon2 = float(input("Enter the cocentration of the " + wordAns + " product: "))
+                    ECon2 = float(input("Enter the cocentration (molarity) of the " + wordAns + " product: "))
                     if EPro == None:
                         EPro = 1
                     EPro = float(EPro * (ECon2 ** float(EC2)))
