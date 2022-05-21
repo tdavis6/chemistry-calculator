@@ -17,7 +17,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.2.1")
+print("Version 1.3-beta.0")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
@@ -45,6 +45,56 @@ MM_of_Elements = {'H': 1.00794, 'He': 4.002602, 'Li': 6.941, 'Be': 9.012182, 'B'
                   'Ds': 281, 'Rg': 281, 'Cn': 285, 'Nh': 284, 'Fl': 289, 'Mc': 289, 'Lv': 292, 'Ts': 294, 'Og': 294,
                   '': 0}
 
+def molar_mass(compound: str, decimal_places=None) -> float:
+    is_polyatomic = end = multiply = False
+    polyatomic_mass, m_m, multiplier = 0, 0, 1
+    element = ''
+
+    for e in compound:
+        if is_polyatomic:
+            if end:
+                is_polyatomic = False
+                m_m += int(e) * polyatomic_mass if e.isdigit() else polyatomic_mass + MM_of_Elements[e]
+            elif e.isdigit():
+                multiplier = int(str(multiplier) + e) if multiply else int(e)
+                multiply = True
+            elif e.islower():
+                element += e
+            elif e.isupper():
+                polyatomic_mass += multiplier * MM_of_Elements[element]
+                element, multiplier, multiply = e, 1, False
+            elif e == ')':
+                polyatomic_mass += multiplier * MM_of_Elements[element]
+                element, multiplier = '', 1
+                end, multiply = True, False
+        elif e == '(':
+            m_m += multiplier * MM_of_Elements[element]
+            element, multiplier = '', 1
+            is_polyatomic, multiply = True, False
+        elif e.isdigit():
+            multiplier = int(str(multiplier) + e) if multiply else int(e)
+            multiply = True
+        elif e.islower():
+            element += e
+        elif e.isupper():
+            m_m += multiplier * MM_of_Elements[element]
+            element, multiplier, multiply = e, 1, False
+    m_m += multiplier * MM_of_Elements[element]
+    if decimal_places is not None:
+        return round(m_m, decimal_places)
+    return m_m
+
+
+if __name__ == '__main__':
+    # TESTS
+    assert molar_mass('H') == 1.00794
+    assert 18.015 < molar_mass('H2O') < 18.016
+    assert 98.07 < molar_mass('H2SO4') < 98.08
+    assert 386 < molar_mass('CF3OCF(CF3)CF2OCF2OCF3') < 386.1
+    assert 159.6 < molar_mass('Fe2O3') < 159.7
+    # OPTIONS
+    DECIMAL_PLACES = 20
+
 while True:
     #Get type of calculation
     print()
@@ -59,10 +109,12 @@ while True:
     print("6 = Gas Law Calculations")
     print("7 = Calorimetry Calculations")
     print("8 = Equilibrium Calculations")
+    print("9 = Entropy Calculations")
+    print("10 = Metric/Imperial Conversions")
     print()
     calculationType = int(input("Enter the number of the calculation shown above that you would like to be completed, or \"0\" to quit: "))
     #Go to calculation type
-    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8):
+    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8) and (calculationType != 9) and (calculationType != 10):
         print()
         print("Please enter a valid option.")
 
@@ -71,63 +123,12 @@ while True:
 
     if calculationType == 1:
         while True:
-            MMCInput = input(str('\nEnter Compound Formula (capitalize elements, eg. Mn instead of mn) or enter \"0\" to quit: '))
+            MMCInput = input(str('\nEnter Compound Formula (capitalize elements, eg. Mn instead of mn), or enter \"0\" to quit: '))
             if MMCInput == "0":
                 break
             else:
-                def molar_mass(compound: str, decimal_places=None) -> float:
-                    is_polyatomic = end = multiply = False
-                    polyatomic_mass, m_m, multiplier = 0, 0, 1
-                    element = ''
-
-                    for e in compound:
-                        if is_polyatomic:
-                            if end:
-                                is_polyatomic = False
-                                m_m += int(e) * polyatomic_mass if e.isdigit() else polyatomic_mass + MM_of_Elements[e]
-                            elif e.isdigit():
-                                multiplier = int(str(multiplier) + e) if multiply else int(e)
-                                multiply = True
-                            elif e.islower():
-                                element += e
-                            elif e.isupper():
-                                polyatomic_mass += multiplier * MM_of_Elements[element]
-                                element, multiplier, multiply = e, 1, False
-                            elif e == ')':
-                                polyatomic_mass += multiplier * MM_of_Elements[element]
-                                element, multiplier = '', 1
-                                end, multiply = True, False
-                        elif e == '(':
-                            m_m += multiplier * MM_of_Elements[element]
-                            element, multiplier = '', 1
-                            is_polyatomic, multiply = True, False
-                        elif e.isdigit():
-                            multiplier = int(str(multiplier) + e) if multiply else int(e)
-                            multiply = True
-                        elif e.islower():
-                            element += e
-                        elif e.isupper():
-                            m_m += multiplier * MM_of_Elements[element]
-                            element, multiplier, multiply = e, 1, False
-                    m_m += multiplier * MM_of_Elements[element]
-                    if decimal_places is not None:
-                        return round(m_m, decimal_places)
-                    return m_m
-
-
-                if __name__ == '__main__':
-                    # TESTS
-                    assert molar_mass('H') == 1.00794
-                    assert 18.015 < molar_mass('H2O') < 18.016
-                    assert 98.07 < molar_mass('H2SO4') < 98.08
-                    assert 386 < molar_mass('CF3OCF(CF3)CF2OCF2OCF3') < 386.1
-                    assert 159.6 < molar_mass('Fe2O3') < 159.7
-                    # OPTIONS
-                    DECIMAL_PLACES = 20
-
-                    user_input = MMCInput
-                    print()
-                    print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
+                print()
+                print(f'The molar mass of {MMCInput} is {molar_mass(MMCInput, DECIMAL_PLACES)} g/mol')
 
     if calculationType == 2:
         #List number types
@@ -162,56 +163,6 @@ while True:
                 print()
             if SType == 0:
                 break
-            #Code for molar mass calculations can be found here: https://gist.github.com/elibroftw/22e3b4c1eb7fa0a6c83d099d24200f95
-            def molar_mass(compound: str, decimal_places=None) -> float:
-                is_polyatomic = end = multiply = False
-                polyatomic_mass, m_m, multiplier = 0, 0, 1
-                element = ''
-
-                for e in compound:
-                    if is_polyatomic:
-                        if end:
-                            is_polyatomic = False
-                            m_m += int(e) * polyatomic_mass if e.isdigit() else polyatomic_mass + MM_of_Elements[e]
-                        elif e.isdigit():
-                            multiplier = int(str(multiplier) + e) if multiply else int(e)
-                            multiply = True
-                        elif e.islower():
-                            element += e
-                        elif e.isupper():
-                            polyatomic_mass += multiplier * MM_of_Elements[element]
-                            element, multiplier, multiply = e, 1, False
-                        elif e == ')':
-                            polyatomic_mass += multiplier * MM_of_Elements[element]
-                            element, multiplier = '', 1
-                            end, multiply = True, False
-                    elif e == '(':
-                        m_m += multiplier * MM_of_Elements[element]
-                        element, multiplier = '', 1
-                        is_polyatomic, multiply = True, False
-                    elif e.isdigit():
-                        multiplier = int(str(multiplier) + e) if multiply else int(e)
-                        multiply = True
-                    elif e.islower():
-                        element += e
-                    elif e.isupper():
-                        m_m += multiplier * MM_of_Elements[element]
-                        element, multiplier, multiply = e, 1, False
-                m_m += multiplier * MM_of_Elements[element]
-                if decimal_places is not None:
-                    return round(m_m, decimal_places)
-                return m_m
-
-
-            if __name__ == '__main__':
-                # TESTS
-                assert molar_mass('H') == 1.00794
-                assert 18.015 < molar_mass('H2O') < 18.016
-                assert 98.07 < molar_mass('H2SO4') < 98.08
-                assert 386 < molar_mass('CF3OCF(CF3)CF2OCF2OCF3') < 386.1
-                assert 159.6 < molar_mass('Fe2O3') < 159.7
-                # OPTIONS
-                DECIMAL_PLACES = 20
 
             if (SType == 1) or (SType == 2) or (SType == 3) or (SType == 4) or (SType == 5) or (SType == 6) or (SType == 7) or (SType == 8) or (SType == 9) or (SType == 10) or (SType == 11) or (SType == 12) or (SType == 13) or (SType == 14) or (SType == 15) or (SType == 16):
                 if (SType == 1) or (SType == 2) or (SType == 3) or (SType == 4):
@@ -221,7 +172,6 @@ while True:
                 SFormula2 = input('Enter the second (Y) compound formula (please capitalize elements, eg. Mn instead of mn): ')
                 SCoefficient2 = int(input("What is the coefficient of the second (Y) compount (Please make sure the reaction is balanced)? "))
                 #Format prints like this:
-                #print(f'The molar mass of {user_input} is {molar_mass(user_input, DECIMAL_PLACES)} g/mol')
                 if SType == 1:
                     MMSF1 = float(sum({molar_mass(SFormula1, DECIMAL_PLACES)}))
                     MMSF2 = float(sum({molar_mass(SFormula2, DECIMAL_PLACES)}))
@@ -747,7 +697,6 @@ while True:
             if EType == 0:
                 break
             if EType == 1:
-                print()
                 ECount1 = int(input("Enter the total number of different reactants in the equation: "))
                 ECount2 = int(input("Enter the total number of different products in the equation: "))
                 print()
@@ -840,3 +789,566 @@ while True:
                 print()
                 print("The equilibrium constant of the pressure (Kp) of this reaction is " + EType1ANS + ".")
                 print()
+
+    if calculationType == 9:
+        print()
+        print("1 = Entropy")
+        print("2 = Change in Entropy")
+        print()
+        while True:
+            EnType = int(input("Enter the number of the entropy calculation that you would like to solve, or \"0\" to quit: : "))
+            if (EnType != 0) & (EnType != 1) & (EnType != 2):
+                print()
+                print("Please enter a valid option.")
+                print()
+            if EnType == 0:
+                break
+            if EnType == 1:
+                EnStates = float(input("Enter the total number of possible states (W): "))
+                print()
+                print("The entropy is " + str(1.38065e-23 * math.log(EnStates)) + ".")
+                print()
+            if EnType == 2:
+                print()
+                EnDH = float(input("Enter the enthalpy of the foward reaction: "))
+                EnT = float(input("Enter the temperature in kelvin of which the reaction occured at: "))
+                print()
+                print("The change in entropy is " + str(EnDH/EnT) + ".")
+
+    if calculationType == 10:
+        print()
+        print("Note: Tons refers to the imperial unit equivalent to 2000 pounds.")
+        print()
+        print("1 = Imperial to Metric")
+        print("2 = Metric to Imperial")
+        print()
+        while True:
+            UType = int(input("Enter the number the conversion type that you would like to solve, or \"0\" to quit : "))
+            if (UType != 0) & (UType != 1) & (UType != 2):
+                print()
+                print("Please enter a valid option.")
+                print()
+            if UType == 0:
+                break
+            if UType == 1:
+                print()
+                print("1 = Feet")
+                print("2 = Inches")
+                print("3 = Yards")
+                print("4 = Miles")
+                print("5 = Nautical Miles")
+                print("6 = Acres")
+                print("7 = Square Miles")
+                print("8 = Square Feet")
+                print("9 = Fluid Ounces")
+                print("10 = Pints")
+                print("11 = Quarts")
+                print("12 = Gallons")
+                print("13 = Ounces")
+                print("14 = Pounds")
+                print("15 = Tons")
+                print("16 = Fahrenheit")
+                print()
+                UInput = int(input("Enter the number of the imperial unit that you have: "))
+                if UInput == 1:
+                    UImp1 = float(input("Enter the number of feet that you have: "))
+                    UImp = UImp1 * 0.3048
+                    print()
+                    print("1 = Millimeters")
+                    print("2 = Meters")
+                    print("3 = Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " feet is " + str(UImp * 1000) + " millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " feet is " + str(UImp) + " meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " feet is " + str(UImp / 1000) + " kilometers.")
+                if UInput == 2:
+                    UImp1 = float(input("Enter the number of inches that you have: "))
+                    UImp = (UImp1 / 12) * 0.3048
+                    print()
+                    print("1 = Millimeters")
+                    print("2 = Meters")
+                    print("3 = Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " inches is " + str(UImp * 1000) + " millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " inches is " + str(UImp) + " meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " inches is " + str(UImp / 1000) + " kilometers.")
+                if UInput == 3:
+                    UImp1 = float(input("Enter the number of yards that you have: "))
+                    UImp = (UImp1 * 3) * 0.3048
+                    print()
+                    print("1 = Millimeters")
+                    print("2 = Meters")
+                    print("3 = Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " yards is " + str(UImp * 1000) + " millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " yards is " + str(UImp) + " meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " yards is " + str(UImp / 1000) + " kilometers.")
+                if UInput == 4:
+                    UImp1 = float(input("Enter the number of miles that you have: "))
+                    UImp = (UImp1 * 5280) * 0.3048
+                    print()
+                    print("1 = Millimeters")
+                    print("2 = Meters")
+                    print("3 = Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " miles is " + str(UImp * 1000) + " millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " miles is " + str(UImp) + " meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " miles is " + str(UImp / 1000) + " kilometers.")
+                if UInput == 5:
+                    UImp1 = float(input("Enter the number of nautical miles that you have: "))
+                    UImp = (UImp1 * 6076.12) * 0.3048
+                    print()
+                    print("1 = Millimeters")
+                    print("2 = Meters")
+                    print("3 = Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " nautical miles is " + str(UImp * 1000) + " millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " nautical miles is " + str(UImp) + " meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " nautical miles is " + str(UImp / 1000) + " kilometers.")
+                if UInput == 6:
+                    UImp1 = float(input("Enter the number of acres that you have: "))
+                    UImp = (UImp1 * 4046.8564224)
+                    print()
+                    print("1 = Square Millimeters")
+                    print("2 = Square Meters")
+                    print("3 = Square Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " acres is " + str(UImp * 1000) + " square millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " acres is " + str(UImp) + " square meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " acres is " + str(UImp / 1000) + " square kilometers.")
+                if UInput == 7:
+                    UImp1 = float(input("Enter the number of square miles that you have: "))
+                    UImp = ((UImp1 * 640) * 4046.8564224)
+                    print()
+                    print("1 = Square Millimeters")
+                    print("2 = Square Meters")
+                    print("3 = Square Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " square miles is " + str(UImp * 1000) + " square millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " square miles is " + str(UImp) + " square meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " square miles is " + str(UImp / 1000) + " square kilometers.")
+                if UInput == 8:
+                    UImp1 = float(input("Enter the number of square feet that you have: "))
+                    UImp = (UImp1 * 0.09290304)
+                    print()
+                    print("1 = Square Millimeters")
+                    print("2 = Square Meters")
+                    print("3 = Square Kilometers")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " square feet is " + str(UImp * 1000) + " square millimeters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " square feet is " + str(UImp) + " square meters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " square feet is " + str(UImp / 1000) + " square kilometers.")
+                if UInput == 9:
+                    UImp1 = float(input("Enter the number of fluid ounces that you have: "))
+                    UImp = (UImp1 * 0.0295735296)
+                    print()
+                    print("1 = Milliliters")
+                    print("2 = Liters")
+                    print("3 = Kiloliters")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " fluid ounces is " + str(UImp * 1000) + " milliliters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " fluid ounces is " + str(UImp) + " liters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " fluid ounces is " + str(UImp / 1000) + " kiloliters.")
+                if UInput == 10:
+                    UImp1 = float(input("Enter the number of pints that you have: "))
+                    UImp = (UImp1 * 0.473176473)
+                    print()
+                    print("1 = Milliliters")
+                    print("2 = Liters")
+                    print("3 = Kiloliters")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " pints is " + str(UImp * 1000) + " milliliters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " pints is " + str(UImp) + " liters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " pints is " + str(UImp / 1000) + " kiloliters.")
+                if UInput == 11:
+                    UImp1 = float(input("Enter the number of quarts that you have: "))
+                    UImp = (UImp1 * 0.946352946)
+                    print()
+                    print("1 = Milliliters")
+                    print("2 = Liters")
+                    print("3 = Kiloliters")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " quarts is " + str(UImp * 1000) + " milliliters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " quarts is " + str(UImp) + " liters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " quarts is " + str(UImp / 1000) + " kiloliters.")
+                if UInput == 12:
+                    UImp1 = float(input("Enter the number of gallons that you have: "))
+                    UImp = (UImp1 * 3.785411784)
+                    print()
+                    print("1 = Milliliters")
+                    print("2 = Liters")
+                    print("3 = Kiloliters")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " gallons is " + str(UImp * 1000) + " milliliters.")
+                    if UMet == 2:
+                        print(str(UImp1) + " gallons is " + str(UImp) + " liters.")
+                    if UMet == 3:
+                        print(str(UImp1) + " gallons is " + str(UImp / 1000) + " kiloliters.")
+                if UInput == 13:
+                    UImp1 = float(input("Enter the number of ounces that you have: "))
+                    UImp = (UImp1 * 28.349523125)
+                    print()
+                    print("1 = Milligrams")
+                    print("2 = Grams")
+                    print("3 = Kilograms")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " ounces is " + str(UImp * 1000) + " milligrams.")
+                    if UMet == 2:
+                        print(str(UImp1) + " ounces is " + str(UImp) + " grams.")
+                    if UMet == 3:
+                        print(str(UImp1) + " ounces is " + str(UImp / 1000) + " kilograms.")
+                if UInput == 14:
+                    UImp1 = float(input("Enter the number of pounds that you have: "))
+                    UImp = (UImp1 * 453.59237)
+                    print()
+                    print("1 = Milligrams")
+                    print("2 = Grams")
+                    print("3 = Kilograms")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " pounds is " + str(UImp * 1000) + " milligrams.")
+                    if UMet == 2:
+                        print(str(UImp1) + " pounds is " + str(UImp) + " grams.")
+                    if UMet == 3:
+                        print(str(UImp1) + " pounds is " + str(UImp / 1000) + " kilograms.")
+                if UInput == 15:
+                    UImp1 = float(input("Enter the number of tons that you have: "))
+                    UImp = (UImp1 * 907184.74)
+                    print()
+                    print("1 = Milligrams")
+                    print("2 = Grams")
+                    print("3 = Kilograms")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " tons is " + str(UImp * 1000) + " milligrams.")
+                    if UMet == 2:
+                        print(str(UImp1) + " tons is " + str(UImp) + " grams.")
+                    if UMet == 3:
+                        print(str(UImp1) + " tons is " + str(UImp / 1000) + " kilograms.")
+                if UInput == 16:
+                    UImp1 = float(input("Enter the temperature in fahrenheit that you have: "))
+                    UImp = ((UImp1 - 32) * (5/9))
+                    print()
+                    print("1 = Celsius")
+                    print("2 = Kelvin")
+                    print()
+                    UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
+                    print()
+                    if UMet == 1:
+                        print(str(UImp1) + " fahrenheit is " + str(UImp) + " celsius.")
+                    if UMet == 2:
+                        print(str(UImp1) + " fahrenheit is " + str(UImp + 273) + " kelvin.")
+            if UType == 2:
+                print()
+                print("1 = Meters")
+                print("2 = Millimeters")
+                print("3 = Kilometers")
+                print("4 = Square Meters")
+                print("5 = Square Millimeters")
+                print("6 = Square Kilometers")
+                print("7 = Cubic Meters")
+                print("8 = Cubic Millimeters")
+                print("9 = Cubic Kilometers")
+                print("10 = Grams")
+                print("11 = Milligrams")
+                print("12 = Kilograms")
+                print("13 = Celsius")
+                print()
+                UInput = int(input("Enter the number of the imperial unit that you have: "))
+                if UInput == 1:
+                    UMet1 = float(input("Enter the number of meters that you have: "))
+                    print()
+                    print("1 = Feet")
+                    print("2 = Inches")
+                    print("3 = Yards")
+                    print("4 = Miles")
+                    print("5 = Nautical Miles")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1
+                    if UImp == 1:
+                        print(str(UMet1) + " meters is " + str(UMet * 3.280839895) + " feet.")
+                    if UImp == 2:
+                        print(str(UMet1) + " meters is " + str((UMet * 3.280839895) * 12) + " inches.")
+                    if UImp == 3:
+                        print(str(UMet1) + " meters is " + str((UMet * 3.280839895) * 3) + " yards.")
+                    if UImp == 4:
+                        print(str(UMet1) + " meters is " + str(UMet * 0.0006213689) + " miles.")
+                    if UImp == 5:
+                        print(str(UMet1) + " meters is " + str(UMet * 1852) + " nautical miles.")
+                if UInput == 2:
+                    UMet1 = float(input("Enter the number of millimeters that you have: "))
+                    print()
+                    print("1 = Feet")
+                    print("2 = Inches")
+                    print("3 = Yards")
+                    print("4 = Miles")
+                    print("5 = Nautical Miles")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 / 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " millimeters is " + str(UMet * 3.280839895) + " feet.")
+                    if UImp == 2:
+                        print(str(UMet1) + " millimeters is " + str((UMet * 3.280839895) * 12) + " inches.")
+                    if UImp == 3:
+                        print(str(UMet1) + " millimeters is " + str((UMet * 3.280839895) * 3) + " yards.")
+                    if UImp == 4:
+                        print(str(UMet1) + " millimeters is " + str(UMet * 0.0006213689) + " miles.")
+                    if UImp == 5:
+                        print(str(UMet1) + " millimeters is " + str(UMet * 1852) + " nautical miles.")
+                if UInput == 3:
+                    UMet1 = float(input("Enter the number of kilometers that you have: "))
+                    print()
+                    print("1 = Feet")
+                    print("2 = Inches")
+                    print("3 = Yards")
+                    print("4 = Miles")
+                    print("5 = Nautical Miles")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 * 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " kilometers is " + str(UMet * 3.280839895) + " feet.")
+                    if UImp == 2:
+                        print(str(UMet1) + " kilometers is " + str((UMet * 3.280839895) * 12) + " inches.")
+                    if UImp == 3:
+                        print(str(UMet1) + " kilometers is " + str((UMet * 3.280839895) * 3) + " yards.")
+                    if UImp == 4:
+                        print(str(UMet1) + " kilometers is " + str(UMet * 0.0006213689) + " miles.")
+                    if UImp == 5:
+                        print(str(UMet1) + " kilometers is " + str(UMet * 1852) + " nautical miles.")
+                if UInput == 4:
+                    UMet1 = float(input("Enter the number of square meters that you have: "))
+                    print()
+                    print("1 = Acres")
+                    print("2 = Square Miles")
+                    print("3 = Square Feet")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1
+                    if UImp == 1:
+                        print(str(UMet1) + " square meters is " + str(UMet * 3.280839895) + " acres.")
+                    if UImp == 2:
+                        print(str(UMet1) + " square meters is " + str(UMet * 3.861018768E-7) + " square miles.")
+                    if UImp == 3:
+                        print(str(UMet1) + " square meters is " + str(UMet * 10.763910417) + " square feet.")
+                if UInput == 5:
+                    UMet1 = float(input("Enter the number of square millimeters that you have: "))
+                    print()
+                    print("1 = Acres")
+                    print("2 = Square Miles")
+                    print("3 = Square Feet")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 / 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " square millimeters is " + str(UMet * 3.280839895) + " acres.")
+                    if UImp == 2:
+                        print(str(UMet1) + " square millimeters is " + str(UMet * 3.861018768E-7) + " square miles.")
+                    if UImp == 3:
+                        print(str(UMet1) + " square millimeters is " + str(UMet * 10.763910417) + " square feet.")
+                if UInput == 6:
+                    UMet1 = float(input("Enter the number of square kilometers that you have: "))
+                    print()
+                    print("1 = Acres")
+                    print("2 = Square Miles")
+                    print("3 = Square Feet")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 * 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " square kilometers is " + str(UMet * 3.280839895) + " acres.")
+                    if UImp == 2:
+                        print(str(UMet1) + " square kilometers is " + str(UMet * 3.861018768E-7) + " square miles.")
+                    if UImp == 3:
+                        print(str(UMet1) + " square kilometers is " + str(UMet * 10.763910417) + " square feet.")
+                if UInput == 7:
+                    UMet1 = float(input("Enter the number of cubic meters that you have: "))
+                    print()
+                    print("1 = Fluid Ounces")
+                    print("2 = Pints")
+                    print("3 = Quarts")
+                    print("4 = Gallons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1
+                    if UImp == 1:
+                        print(str(UMet1) + " cubic meters is " + str(UMet * 33814.038638) + " fluid ounces.")
+                    if UImp == 2:
+                        print(str(UMet1) + " cubic meters is " + str(UMet * 2113.3774149) + " pints.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic meters is " + str(UMet * 1056.6887074) + " quarts.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic meters is " + str(UMet * 264.17217686) + " gallons.")
+                if UInput == 8:
+                    UMet1 = float(input("Enter the number of cubic millimeters that you have: "))
+                    print()
+                    print("1 = Fluid Ounces")
+                    print("2 = Pints")
+                    print("3 = Quarts")
+                    print("4 = Gallons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 / 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " cubic millimeters is " + str(UMet * 33814.038638) + " fluid ounces.")
+                    if UImp == 2:
+                        print(str(UMet1) + " cubic millimeters is " + str(UMet * 2113.3774149) + " pints.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic millimeters is " + str(UMet * 1056.6887074) + " quarts.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic millimeters is " + str(UMet * 264.17217686) + " gallons.")
+                if UInput == 9:
+                    UMet1 = float(input("Enter the number of cubic kilometers that you have: "))
+                    print()
+                    print("1 = Fluid Ounces")
+                    print("2 = Pints")
+                    print("3 = Quarts")
+                    print("4 = Gallons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 * 1000
+                    if UImp == 1:
+                        print(str(UMet1) + " cubic kilometers is " + str(UMet * 33814.038638) + " fluid ounces.")
+                    if UImp == 2:
+                        print(str(UMet1) + " cubic kilometers is " + str(UMet * 2113.3774149) + " pints.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic kilometers is " + str(UMet * 1056.6887074) + " quarts.")
+                    if UImp == 3:
+                        print(str(UMet1) + " cubic kilometers is " + str(UMet * 264.17217686) + " gallons.")
+                if UInput == 10:
+                    UMet1 = float(input("Enter the number of grams that you have: "))
+                    print()
+                    print("1 = Pounds")
+                    print("2 = Ounces")
+                    print("3 = Tons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = UMet1 * 0.0022046244
+                    if UImp == 1:
+                        print(str(UMet1) + " grams is " + str(UMet) + " pounds.")
+                    if UImp == 2:
+                        print(str(UMet1) + " grams is " + str(UMet * 16) + " ounces.")
+                    if UImp == 3:
+                        print(str(UMet1) + " grams is " + str(UMet / 2000) + " tons.")
+                if UInput == 11:
+                    UMet1 = float(input("Enter the number of milligrams that you have: "))
+                    print()
+                    print("1 = Pounds")
+                    print("2 = Ounces")
+                    print("3 = Tons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = (UMet1 * 1000) * 0.0022046244
+                    if UImp == 1:
+                        print(str(UMet1) + " milligrams is " + str(UMet) + " pounds.")
+                    if UImp == 2:
+                        print(str(UMet1) + " milligrams is " + str(UMet * 16) + " ounces.")
+                    if UImp == 3:
+                        print(str(UMet1) + " milligrams is " + str(UMet / 2000) + " tons.")
+                if UInput == 12:
+                    UMet1 = float(input("Enter the number of kilograms that you have: "))
+                    print()
+                    print("1 = Pounds")
+                    print("2 = Ounces")
+                    print("3 = Tons")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = (UMet1 / 1000) * 0.0022046244
+                    if UImp == 1:
+                        print(str(UMet1) + " kilograms is " + str(UMet) + " pounds.")
+                    if UImp == 2:
+                        print(str(UMet1) + " kilograms is " + str(UMet * 16) + " ounces.")
+                    if UImp == 3:
+                        print(str(UMet1) + " kilograms is " + str(UMet / 2000) + " tons.")
+                if UInput == 13:
+                    UMet1 = float(input("Enter the temperature in celsius that you have: "))
+                    print()
+                    print("1 = Fahrenheit")
+                    print("2 = Kelvin")
+                    print()
+                    UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
+                    print()
+                    UMet = ((UMet1 + 32) * (9/5))
+                    if UImp == 1:
+                        print(str(UMet1) + " celsius is " + str(UMet) + " fahrenheit.")
+                    if UImp == 2:
+                        print(str(UMet1) + " celsius is " + str(UMet1 + 273) + " kelvin.")
