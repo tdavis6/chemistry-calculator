@@ -17,7 +17,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.3-beta.0")
+print("Version 1.3.0")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
@@ -848,10 +848,13 @@ while True:
                 print("14 = Pounds")
                 print("15 = Tons")
                 print("16 = Fahrenheit")
-                print()
                 while True:
-                    UInput = int(input("Enter the number of the imperial unit that you have: "))
+                    print()
+                    UInput = int(input("Enter the number of the imperial unit that you have, or \"0\" to quit: "))
+                    if UInput == 0:
+                        break
                     if UInput == 1:
+                        print()
                         UImp1 = float(input("Enter the number of feet that you have: "))
                         UImp = UImp1 * 0.3048
                         print()
@@ -1119,9 +1122,11 @@ while True:
                 print("11 = Milligrams")
                 print("12 = Kilograms")
                 print("13 = Celsius")
-                print()
                 while True:
-                    UInput = int(input("Enter the number of the imperial unit that you have: "))
+                    print()
+                    UInput = int(input("Enter the number of the imperial unit that you have, or \"0\" to quit: "))
+                    if UInput == 0:
+                        break
                     if UInput == 1:
                         UMet1 = float(input("Enter the number of meters that you have: "))
                         print()
