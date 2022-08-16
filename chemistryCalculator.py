@@ -111,10 +111,11 @@ while True:
     print("8 = Equilibrium Calculations")
     print("9 = Entropy Calculations")
     print("10 = Metric/Imperial Conversions")
+    print("11 = Significant Figures")
     print()
     calculationType = int(input("Enter the number of the calculation shown above that you would like to be completed, or \"0\" to quit: "))
     #Go to calculation type
-    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8) and (calculationType != 9) and (calculationType != 10):
+    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8) and (calculationType != 9) and (calculationType != 10) and (calculationType != 11):
         print()
         print("Please enter a valid option.")
 
@@ -1359,3 +1360,5 @@ while True:
                             print(str(UMet1) + " celsius is " + str(UMet) + " fahrenheit.")
                         if UImp == 2:
                             print(str(UMet1) + " celsius is " + str(UMet1 + 273) + " kelvin.")
+
+    if calculationType == 11:
