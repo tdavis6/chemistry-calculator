@@ -14,9 +14,6 @@
 
 
 import math
-import sortedcontainers
-import sigfig
-from sigfig import round
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
@@ -1249,6 +1246,9 @@ while True:
 
 
     if calculationType == 11:
+        import sortedcontainers
+        import sigfig
+        from sigfig import round
         while True:
             sigFig = int(input("\n\nEnter the number of significant figures that you would like to round to, or \"0\" to exit: "))
             if sigFig == 0:
