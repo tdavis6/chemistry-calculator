@@ -14,10 +14,13 @@
 
 
 import math
+import sortedcontainers
+import sigfig
+from sigfig import round
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.3.0")
+print("Version 1.4.0")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
@@ -97,10 +100,7 @@ if __name__ == '__main__':
 
 while True:
     #Get type of calculation
-    print()
-    print()
-    print("Main Menu")
-    print()
+    print("\n\nMain Menu\n")
     print("1 = Molar Mass Calculator")
     print("2 = Stoichiometry Calculations")
     print("3 = Molarity Calculations")
@@ -111,12 +111,11 @@ while True:
     print("8 = Equilibrium Calculations")
     print("9 = Entropy Calculations")
     print("10 = Metric/Imperial Conversions")
-    print()
+    print("11 = Significant Figures\n")
     calculationType = int(input("Enter the number of the calculation shown above that you would like to be completed, or \"0\" to quit: "))
     #Go to calculation type
-    if (calculationType != 0) and (calculationType != 1) and (calculationType != 2) and (calculationType != 3) and (calculationType != 4) and (calculationType != 5) and (calculationType != 6) and (calculationType != 7) and (calculationType != 8) and (calculationType != 9) and (calculationType != 10):
-        print()
-        print("Please enter a valid option.")
+    if calculationType not in range(12):
+        print("\nPlease enter a valid option.")
 
     if calculationType == 0:
         break
@@ -159,8 +158,7 @@ while True:
             print()
             if (SType != 1) & (SType != 2) & (SType != 3) & (SType != 4) & (SType != 5) & (SType != 6) & (SType != 7) & (SType != 8) & (SType != 9) & (SType != 10) & (SType != 11) & (SType != 12) & (SType != 13) & (SType != 14) & (SType != 15) & (SType != 16):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if SType == 0:
                 break
 
@@ -247,19 +245,16 @@ while True:
 
     if calculationType == 3:
     # Get the number to solve for
-        print()
-        print("1 = Molarity")
+        print("\n1 = Molarity")
         print("2 = Moles of Solute")
-        print("3 = Liters of Solution")
-        print()
+        print("3 = Liters of Solution\n")
         while True:
             #Get type of calculation
             MType = int(input("Enter the number of the variable that you would like to find, or \"0\" to quit: "))
             print()
             #Do the calculation
             if (MType != 0) & (MType != 1) & (MType != 2) & (MType != 3):
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if MType == 0:
                 break
             if MType == 1:
@@ -272,26 +267,21 @@ while True:
                 MMolarity = float(input("What is the molarity of this solution? "))
                 MLitersOfSolution = float(input("How many liters of solution is there? "))
                 MMolesOfSolute = MMolarity*MLitersOfSolution
-                print()
-                print("There is", MMolesOfSolute, "moles of the solute.")
+                print("\nThere is", MMolesOfSolute, "moles of the solute.")
             if MType == 3:
                 MMolesOfSolute = float(input("How many moles of solute is there? "))
                 MMolarity = float(input("What is the molarity of this solution? "))
                 MLitersOfSolution = MMolesOfSolute/MMolarity
-                print()
-                print("There is", MLitersOfSolution, "liters of solution.")
+                print("\nThere is", MLitersOfSolution, "liters of solution.")
 
     if calculationType == 4:
-        print()
-        print("1 = Molarity")
-        print("2 = Volume")
-        print()
+        print("\n1 = Molarity")
+        print("2 = Volume\n")
         while True:
             DType = int(input("Enter the number of the variable you would like to solve for, or \"0\" to quit: "))
             print()
             if (DType != 0) & (DType != 1) & (DType != 2):
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if DType == 0:
                 break
             if DType == 1:
@@ -309,14 +299,11 @@ while True:
                 DV1 = float(input("Enter the value of the initial volume (V1): "))
                 DM2 = float(input("Enter the value of the final molarity (M2): "))
                 DANS2 = ((DM1*DV1)/DM2)
-                print()
-                print(DANS2, "is the final volume.")
-                print()
+                print("\n", DANS2, "is the final volume.\n")
 
     if calculationType == 5:
         # Get type of conversion
-        print()
-        print("1 = pH to pOH")
+        print("\n1 = pH to pOH")
         print("2 = pOH to pH")
         print("3 = pH to H+ Concentration")
         print("4 = H+ Concentration to pH")
@@ -327,8 +314,7 @@ while True:
         print("9 = pOH to H+ Concentration")
         print("10 = H+ Concentration to pOH")
         print("11 = H+ Concentration to OH- Concentration")
-        print("12 = OH- Concentration to H+ Concentration")
-        print()
+        print("12 = OH- Concentration to H+ Concentration\n")
         while True:
             pHtype = int(input("Enter the number of the conversion shown above that you would like to be done, or \"0\" to quit: "))
             #option to quit
@@ -377,8 +363,7 @@ while True:
                 pHnumber = float(pHnumber1)
             if (pHtype != 0) & (pHtype != 1) & (pHtype != 2) & (pHtype != 3) & (pHtype != 4) & (pHtype != 5) & (pHtype != 6) & (pHtype != 7) & (pHtype != 8) & (pHtype != 9) & (pHtype != 10) & (pHtype != 11) & (pHtype != 12):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             #type 1
             if pHtype == 1:
                 pHanswer1 = 14-pHnumber
@@ -445,8 +430,7 @@ while True:
                 print(pHanswer12, "is the H+ Concentration.")
 
     if calculationType == 6:
-        print()
-        print("1 = Boyle's Law (Pressure and Volume)")
+        print("1 = Boyle's Law (Pressure and Volume)\n")
         print("2 = Charles' Law (Volume and Temperature)")
         print("3 = Gay-Lussac's Law (Pressure and Temperature)")
         print("4 = Avogadro's Law (Volume and Moles)")
@@ -458,19 +442,16 @@ while True:
             GLType = int(input("Enter the number of the gas law calculation shown above that you would like to be done, or \"0\" to quit: "))
             if (GLType != 0) & (GLType != 1) & (GLType != 2) & (GLType != 3) & (GLType != 4) & (GLType != 5) & (GLType != 6):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if GLType == 0:
                 break
             if GLType == 1:
-                print()
-                print("Note: All values must be in atmospheres or liters, respectively.")
+                print("\nNote: All values must be in atmospheres or liters, respectively.")
                 print("1 = Pressure")
                 print("2 = Volume")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 if (GLType2 != 1) & (GLType2 != 2):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLType2P1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2V1 = float(input("Enter the value of the first volume variable (V1): "))
@@ -486,15 +467,12 @@ while True:
                     print()
                     print(GLType22ANS, "is the volume.")
             if GLType == 2:
-                print()
-                print("Note: All values must be in liters or kelvin, respectively.")
+                print("\nNote: All values must be in liters or kelvin, respectively.")
                 print("1 = Volume")
-                print("2 = Temperature")
-                print()
+                print("2 = Temperature\n")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 if (GLType2 != 1) & (GLType2 != 2):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLType2V1 = float(input("Enter the value of the first volume variable (V1): "))
                     GLType2T1 = float(input("Enter the value of the first temperature variable (T1)(make sure the temperature is in kelvin): "))
@@ -510,15 +488,12 @@ while True:
                     print()
                     print(GLType22ANS, "is the temperature.")
             if GLType == 3:
-                print()
-                print("Note: All values must be in atmospheres or kelvin, respectively.")
+                print("\nNote: All values must be in atmospheres or kelvin, respectively.")
                 print("1 = Pressure")
-                print("2 = Temperature")
-                print()
+                print("2 = Temperature\n")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 if (GLType2 != 1) & (GLType2 != 2):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLType2P1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2T1 = float(input("Enter the value of the first temperature variable (V1)(make sure the temperature is in kelvin): "))
@@ -534,15 +509,12 @@ while True:
                     print()
                     print(GLType22ANS, "is the temperature.")
             if GLType == 4:
-                print()
-                print("Note: All values must be in liters or moles, respectively.")
+                print("\nNote: All values must be in liters or moles, respectively.")
                 print("1 = Volume")
-                print("2 = Moles")
-                print()
+                print("2 = Moles\n")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 if (GLType2 != 1) & (GLType2 != 2):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLType2V1 = float(input("Enter the value of the first pressure variable (P1): "))
                     GLType2M1 = float(input("Enter the value of the first amount of moles (M1): "))
@@ -558,16 +530,13 @@ while True:
                     print()
                     print(GLType22ANS, "is the number of moles.")
             if GLType == 5:
-                print()
-                print("Note: All values must be in atmospheres, liters, or kelvin, respectively.")
+                print("\nNote: All values must be in atmospheres, liters, or kelvin, respectively.")
                 print("1 = Pressure")
                 print("2 = Volume")
-                print("3 = Temperature")
-                print()
+                print("3 = Temperature\n")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 if (GLType2 != 1) & (GLType2 != 2) & (GLType2 !=3):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLP1 = float(input("Enter the initial pressure: "))
                     GLV1 = float(input("Enter the initial volume: "))
@@ -596,18 +565,15 @@ while True:
                     print()
                     print(GLA, "is the final temperature.")
             if GLType == 6:
-                print()
-                print("Note: All values must be in atmospheres, liters, moles, or kelvin, respectively.")
+                print("\nNote: All values must be in atmospheres, liters, moles, or kelvin, respectively.")
                 print("1 = Pressure")
                 print("2 = Volume")
                 print("3 = Moles")
-                print("4 = Temperature")
-                print()
+                print("4 = Temperature\n")
                 GLType2 = int(input("Enter the number of the variable you would like to solve for: "))
                 R = float(0.082057366080960)
                 if (GLType2 != 1) & (GLType2 != 2) & (GLType2 !=3) & (GLType2 != 4):
-                    print("Please enter a valid option.")
-                    print()
+                    print("Please enter a valid option.\n")
                 if GLType2 == 1:
                     GLIGLV = float(input("Enter the volume of the gas: "))
                     GLIGLM = float(input("Enter the amount of moles of the gas: "))
@@ -638,8 +604,7 @@ while True:
                     print(GLIGLA, "is the temperature.")
 
     if calculationType == 7:
-        print()
-        print("1 = Total Heat Energy Transferred")
+        print("\n1 = Total Heat Energy Transferred")
         print("2 = Mass")
         print("3 = Specific Heat Capacity")
         print("4 = Change in Temperature")
@@ -649,8 +614,7 @@ while True:
             CType = int(input("Enter the number of the calorimetry calculation shown above that you would like to be done, or \"0\" to quit: "))
             if (CType != 0) & (CType != 1) & (CType != 2) & (CType != 3) & (CType != 4):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if CType == 0:
                 break
             if CType == 1:
@@ -658,41 +622,34 @@ while True:
                 CSHC = float(input("Enter the specific heat capacity of the substance that was exposed to the heat (usually water): "))
                 CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius) of the substance that was exposed to the heat (usually water): "))
                 CAns = str(CMass * CSHC * CHiT)
-                print()
-                print("The total heat energy transferred is", CAns + " joules.")
+                print("\nThe total heat energy transferred is", CAns + " joules.")
             if CType == 2:
                 CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
                 CSHC = float(input("Enter the specific heat capacity of the substance that was exposed to the heat (usually water): "))
                 CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius)of the substance that was exposed to the heat (usually water): "))
                 CAns = str((CSHC * CHiT)/CTHE)
-                print()
-                print("The mass of the substance that was exposed to the heat is", CAns + " grams.")
+                print("\nThe mass of the substance that was exposed to the heat is", CAns + " grams.")
             if CType == 3:
                 CMass = float(input("Enter the mass (grams) of the substance that was exposed to the heat (usually water): "))
                 CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
                 CHiT = float(input("Enter the change in temperature (degreees kelvin/celsius)of the substance that was exposed to the heat (usually water): "))
                 CAns = str(CTHE/(CMass * CHiT))
-                print()
-                print("The specific heat capacity of the substance that was exposed to the heat is", CAns + " J/g.")
+                print("\nThe specific heat capacity of the substance that was exposed to the heat is", CAns + " J/g.")
             if CType == 4:
                 CMass = float(input("Enter the mass (grams) of the substance that was exposed to the heat (usually water): "))
                 CTHE = float(input("Enter the total heat energy (J) transferred to the substance that was exposed to the heat (usually water): "))
                 CSHC = float(input("Enter the specific heat capacity (J/g of the substance that was exposed to the heat (usually water): "))
                 CAns = str(CTHE/(CMass * CSHC))
-                print()
-                print("The change in temperature is", CAns + " degrees kelvin/celsius.")
+                print("\nThe change in temperature is", CAns + " degrees kelvin/celsius.")
 
     if calculationType == 8:
-        print()
-        print("1 = Equilibrium Constant for Concentration")
-        print("2 = Equilibrium Constant for Pressure")
-        print()
+        print("\n1 = Equilibrium Constant for Concentration")
+        print("2 = Equilibrium Constant for Pressure\n")
         while True:
             EType = int(input("Enter the number of the calculation that you would like to perform, or \"0\" to quit: "))
             if (EType != 0) & (EType != 1) & (EType != 2):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
 
             if EType == 0:
                 break
@@ -740,8 +697,7 @@ while True:
                     EDummy2 = EDummy2 + 1
                 EType1ANS = str(float(EPro) / float(ERea))
                 print()
-                print("The equilibrium constant of the concentration (Kc) of this reaction is " + EType1ANS + ".")
-                print()
+                print("The equilibrium constant of the concentration (Kc) of this reaction is " + EType1ANS + ".\n")
             if EType == 2:
                 print()
                 ECount1 = int(input("Enter the total number of different reactants in the equation: "))
@@ -787,52 +743,42 @@ while True:
                     EDummy2 = EDummy2 + 1
                 EType1ANS = str(float(EPro) / float(ERea))
                 print()
-                print("The equilibrium constant of the pressure (Kp) of this reaction is " + EType1ANS + ".")
-                print()
+                print("The equilibrium constant of the pressure (Kp) of this reaction is " + EType1ANS + ".\n")
 
     if calculationType == 9:
-        print()
-        print("1 = Entropy")
-        print("2 = Change in Entropy")
-        print()
+        print("\n1 = Entropy")
+        print("2 = Change in Entropy\n")
         while True:
             EnType = int(input("Enter the number of the entropy calculation that you would like to solve, or \"0\" to quit: : "))
             if (EnType != 0) & (EnType != 1) & (EnType != 2):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if EnType == 0:
                 break
             if EnType == 1:
                 EnStates = float(input("Enter the total number of possible states (W): "))
                 print()
-                print("The entropy is " + str(1.38065e-23 * math.log(EnStates)) + ".")
-                print()
+                print("The entropy is " + str(1.38065e-23 * math.log(EnStates)) + ".\n")
             if EnType == 2:
                 print()
                 EnDH = float(input("Enter the enthalpy of the foward reaction: "))
                 EnT = float(input("Enter the temperature in kelvin of which the reaction occured at: "))
-                print()
-                print("The change in entropy is " + str(EnDH/EnT) + ".")
+                print("\nThe change in entropy is " + str(EnDH/EnT) + ".")
 
     if calculationType == 10:
         print()
-        print("Note: Tons refers to the imperial unit equivalent to 2000 pounds for all conversions.")
-        print()
+        print("Note: Tons refers to the imperial unit equivalent to 2000 pounds for all conversions.\n")
         print("1 = Imperial to Metric")
-        print("2 = Metric to Imperial")
-        print()
+        print("2 = Metric to Imperial\n")
         while True:
             UType = int(input("Enter the number the conversion type that you would like to solve, or \"0\" to quit : "))
             if (UType != 0) & (UType != 1) & (UType != 2):
                 print()
-                print("Please enter a valid option.")
-                print()
+                print("Please enter a valid option.\n")
             if UType == 0:
                 break
             if UType == 1:
-                print()
-                print("1 = Feet")
+                print("\n1 = Feet")
                 print("2 = Inches")
                 print("3 = Yards")
                 print("4 = Miles")
@@ -857,11 +803,9 @@ while True:
                         print()
                         UImp1 = float(input("Enter the number of feet that you have: "))
                         UImp = UImp1 * 0.3048
-                        print()
-                        print("1 = Millimeters")
+                        print("\n1 = Millimeters")
                         print("2 = Meters")
-                        print("3 = Kilometers")
-                        print()
+                        print("3 = Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -873,11 +817,9 @@ while True:
                     if UInput == 2:
                         UImp1 = float(input("Enter the number of inches that you have: "))
                         UImp = (UImp1 / 12) * 0.3048
-                        print()
-                        print("1 = Millimeters")
+                        print("\n1 = Millimeters")
                         print("2 = Meters")
-                        print("3 = Kilometers")
-                        print()
+                        print("3 = Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -889,11 +831,9 @@ while True:
                     if UInput == 3:
                         UImp1 = float(input("Enter the number of yards that you have: "))
                         UImp = (UImp1 * 3) * 0.3048
-                        print()
-                        print("1 = Millimeters")
+                        print("\n1 = Millimeters")
                         print("2 = Meters")
-                        print("3 = Kilometers")
-                        print()
+                        print("3 = Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -905,11 +845,9 @@ while True:
                     if UInput == 4:
                         UImp1 = float(input("Enter the number of miles that you have: "))
                         UImp = (UImp1 * 5280) * 0.3048
-                        print()
-                        print("1 = Millimeters")
+                        print("\n1 = Millimeters")
                         print("2 = Meters")
-                        print("3 = Kilometers")
-                        print()
+                        print("3 = Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -921,11 +859,9 @@ while True:
                     if UInput == 5:
                         UImp1 = float(input("Enter the number of nautical miles that you have: "))
                         UImp = (UImp1 * 6076.12) * 0.3048
-                        print()
-                        print("1 = Millimeters")
+                        print("\n1 = Millimeters")
                         print("2 = Meters")
-                        print("3 = Kilometers")
-                        print()
+                        print("3 = Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -937,11 +873,9 @@ while True:
                     if UInput == 6:
                         UImp1 = float(input("Enter the number of acres that you have: "))
                         UImp = (UImp1 * 4046.8564224)
-                        print()
-                        print("1 = Square Millimeters")
+                        print("\n1 = Square Millimeters")
                         print("2 = Square Meters")
-                        print("3 = Square Kilometers")
-                        print()
+                        print("3 = Square Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -953,11 +887,9 @@ while True:
                     if UInput == 7:
                         UImp1 = float(input("Enter the number of square miles that you have: "))
                         UImp = ((UImp1 * 640) * 4046.8564224)
-                        print()
-                        print("1 = Square Millimeters")
+                        print("\n1 = Square Millimeters")
                         print("2 = Square Meters")
-                        print("3 = Square Kilometers")
-                        print()
+                        print("3 = Square Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -969,11 +901,9 @@ while True:
                     if UInput == 8:
                         UImp1 = float(input("Enter the number of square feet that you have: "))
                         UImp = (UImp1 * 0.09290304)
-                        print()
-                        print("1 = Square Millimeters")
+                        print("\n1 = Square Millimeters")
                         print("2 = Square Meters")
-                        print("3 = Square Kilometers")
-                        print()
+                        print("3 = Square Kilometers\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -985,11 +915,9 @@ while True:
                     if UInput == 9:
                         UImp1 = float(input("Enter the number of fluid ounces that you have: "))
                         UImp = (UImp1 * 0.0295735296)
-                        print()
-                        print("1 = Milliliters")
+                        print("\n1 = Milliliters")
                         print("2 = Liters")
-                        print("3 = Kiloliters")
-                        print()
+                        print("3 = Kiloliters\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1001,11 +929,9 @@ while True:
                     if UInput == 10:
                         UImp1 = float(input("Enter the number of pints that you have: "))
                         UImp = (UImp1 * 0.473176473)
-                        print()
-                        print("1 = Milliliters")
+                        print("\n1 = Milliliters")
                         print("2 = Liters")
-                        print("3 = Kiloliters")
-                        print()
+                        print("3 = Kiloliters\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1017,11 +943,9 @@ while True:
                     if UInput == 11:
                         UImp1 = float(input("Enter the number of quarts that you have: "))
                         UImp = (UImp1 * 0.946352946)
-                        print()
-                        print("1 = Milliliters")
+                        print("\n1 = Milliliters")
                         print("2 = Liters")
-                        print("3 = Kiloliters")
-                        print()
+                        print("3 = Kiloliters\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1033,11 +957,9 @@ while True:
                     if UInput == 12:
                         UImp1 = float(input("Enter the number of gallons that you have: "))
                         UImp = (UImp1 * 3.785411784)
-                        print()
-                        print("1 = Milliliters")
+                        print("\n1 = Milliliters")
                         print("2 = Liters")
-                        print("3 = Kiloliters")
-                        print()
+                        print("3 = Kiloliters\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1049,11 +971,9 @@ while True:
                     if UInput == 13:
                         UImp1 = float(input("Enter the number of ounces that you have: "))
                         UImp = (UImp1 * 28.349523125)
-                        print()
-                        print("1 = Milligrams")
+                        print("\n1 = Milligrams")
                         print("2 = Grams")
-                        print("3 = Kilograms")
-                        print()
+                        print("3 = Kilograms\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1065,11 +985,9 @@ while True:
                     if UInput == 14:
                         UImp1 = float(input("Enter the number of pounds that you have: "))
                         UImp = (UImp1 * 453.59237)
-                        print()
-                        print("1 = Milligrams")
+                        print("\n1 = Milligrams")
                         print("2 = Grams")
-                        print("3 = Kilograms")
-                        print()
+                        print("3 = Kilograms\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1081,11 +999,9 @@ while True:
                     if UInput == 15:
                         UImp1 = float(input("Enter the number of tons that you have: "))
                         UImp = (UImp1 * 907184.74)
-                        print()
-                        print("1 = Milligrams")
+                        print("\n1 = Milligrams")
                         print("2 = Grams")
-                        print("3 = Kilograms")
-                        print()
+                        print("3 = Kilograms\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1097,10 +1013,8 @@ while True:
                     if UInput == 16:
                         UImp1 = float(input("Enter the temperature in fahrenheit that you have: "))
                         UImp = ((UImp1 - 32) * (5/9))
-                        print()
-                        print("1 = Celsius")
-                        print("2 = Kelvin")
-                        print()
+                        print("\n1 = Celsius")
+                        print("2 = Kelvin\n")
                         UMet = int(input("Enter the number of the metric unit that you want to convert to: "))
                         print()
                         if UMet == 1:
@@ -1108,8 +1022,7 @@ while True:
                         if UMet == 2:
                             print(str(UImp1) + " fahrenheit is " + str(UImp + 273) + " kelvin.")
             if UType == 2:
-                print()
-                print("1 = Meters")
+                print("\n1 = Meters")
                 print("2 = Millimeters")
                 print("3 = Kilometers")
                 print("4 = Square Meters")
@@ -1129,13 +1042,11 @@ while True:
                         break
                     if UInput == 1:
                         UMet1 = float(input("Enter the number of meters that you have: "))
-                        print()
-                        print("1 = Feet")
+                        print("\n1 = Feet")
                         print("2 = Inches")
                         print("3 = Yards")
                         print("4 = Miles")
-                        print("5 = Nautical Miles")
-                        print()
+                        print("5 = Nautical Miles\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1
@@ -1151,13 +1062,11 @@ while True:
                             print(str(UMet1) + " meters is " + str(UMet * 1852) + " nautical miles.")
                     if UInput == 2:
                         UMet1 = float(input("Enter the number of millimeters that you have: "))
-                        print()
-                        print("1 = Feet")
+                        print("\n1 = Feet")
                         print("2 = Inches")
                         print("3 = Yards")
                         print("4 = Miles")
-                        print("5 = Nautical Miles")
-                        print()
+                        print("5 = Nautical Miles\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 / 1000
@@ -1173,13 +1082,11 @@ while True:
                             print(str(UMet1) + " millimeters is " + str(UMet * 1852) + " nautical miles.")
                     if UInput == 3:
                         UMet1 = float(input("Enter the number of kilometers that you have: "))
-                        print()
-                        print("1 = Feet")
+                        print("\n1 = Feet")
                         print("2 = Inches")
                         print("3 = Yards")
                         print("4 = Miles")
-                        print("5 = Nautical Miles")
-                        print()
+                        print("5 = Nautical Miles\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 * 1000
@@ -1195,11 +1102,9 @@ while True:
                             print(str(UMet1) + " kilometers is " + str(UMet * 1852) + " nautical miles.")
                     if UInput == 4:
                         UMet1 = float(input("Enter the number of square meters that you have: "))
-                        print()
-                        print("1 = Acres")
+                        print("\n1 = Acres")
                         print("2 = Square Miles")
-                        print("3 = Square Feet")
-                        print()
+                        print("3 = Square Feet\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1
@@ -1211,11 +1116,9 @@ while True:
                             print(str(UMet1) + " square meters is " + str(UMet * 10.763910417) + " square feet.")
                     if UInput == 5:
                         UMet1 = float(input("Enter the number of square millimeters that you have: "))
-                        print()
-                        print("1 = Acres")
+                        print("\n1 = Acres")
                         print("2 = Square Miles")
-                        print("3 = Square Feet")
-                        print()
+                        print("3 = Square Feet\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 / 1000
@@ -1227,11 +1130,9 @@ while True:
                             print(str(UMet1) + " square millimeters is " + str(UMet * 10.763910417) + " square feet.")
                     if UInput == 6:
                         UMet1 = float(input("Enter the number of square kilometers that you have: "))
-                        print()
-                        print("1 = Acres")
+                        print("\n1 = Acres")
                         print("2 = Square Miles")
-                        print("3 = Square Feet")
-                        print()
+                        print("3 = Square Feet\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 * 1000
@@ -1243,12 +1144,10 @@ while True:
                             print(str(UMet1) + " square kilometers is " + str(UMet * 10.763910417) + " square feet.")
                     if UInput == 7:
                         UMet1 = float(input("Enter the number of cubic meters that you have: "))
-                        print()
-                        print("1 = Fluid Ounces")
+                        print("\n1 = Fluid Ounces")
                         print("2 = Pints")
                         print("3 = Quarts")
-                        print("4 = Gallons")
-                        print()
+                        print("4 = Gallons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1
@@ -1262,12 +1161,10 @@ while True:
                             print(str(UMet1) + " cubic meters is " + str(UMet * 264.17217686) + " gallons.")
                     if UInput == 8:
                         UMet1 = float(input("Enter the number of cubic millimeters that you have: "))
-                        print()
-                        print("1 = Fluid Ounces")
+                        print("\n1 = Fluid Ounces")
                         print("2 = Pints")
                         print("3 = Quarts")
-                        print("4 = Gallons")
-                        print()
+                        print("4 = Gallons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 / 1000
@@ -1281,12 +1178,10 @@ while True:
                             print(str(UMet1) + " cubic millimeters is " + str(UMet * 264.17217686) + " gallons.")
                     if UInput == 9:
                         UMet1 = float(input("Enter the number of cubic kilometers that you have: "))
-                        print()
-                        print("1 = Fluid Ounces")
+                        print("\n1 = Fluid Ounces")
                         print("2 = Pints")
                         print("3 = Quarts")
-                        print("4 = Gallons")
-                        print()
+                        print("4 = Gallons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 * 1000
@@ -1300,11 +1195,9 @@ while True:
                             print(str(UMet1) + " cubic kilometers is " + str(UMet * 264.17217686) + " gallons.")
                     if UInput == 10:
                         UMet1 = float(input("Enter the number of grams that you have: "))
-                        print()
-                        print("1 = Pounds")
+                        print("\n1 = Pounds")
                         print("2 = Ounces")
-                        print("3 = Tons")
-                        print()
+                        print("3 = Tons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = UMet1 * 0.0022046244
@@ -1316,11 +1209,9 @@ while True:
                             print(str(UMet1) + " grams is " + str(UMet / 2000) + " tons.")
                     if UInput == 11:
                         UMet1 = float(input("Enter the number of milligrams that you have: "))
-                        print()
-                        print("1 = Pounds")
+                        print("\n1 = Pounds")
                         print("2 = Ounces")
-                        print("3 = Tons")
-                        print()
+                        print("3 = Tons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = (UMet1 * 1000) * 0.0022046244
@@ -1332,11 +1223,9 @@ while True:
                             print(str(UMet1) + " milligrams is " + str(UMet / 2000) + " tons.")
                     if UInput == 12:
                         UMet1 = float(input("Enter the number of kilograms that you have: "))
-                        print()
-                        print("1 = Pounds")
+                        print("\n1 = Pounds")
                         print("2 = Ounces")
-                        print("3 = Tons")
-                        print()
+                        print("3 = Tons\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = (UMet1 / 1000) * 0.0022046244
@@ -1348,10 +1237,8 @@ while True:
                             print(str(UMet1) + " kilograms is " + str(UMet / 2000) + " tons.")
                     if UInput == 13:
                         UMet1 = float(input("Enter the temperature in celsius that you have: "))
-                        print()
-                        print("1 = Fahrenheit")
-                        print("2 = Kelvin")
-                        print()
+                        print("\n1 = Fahrenheit")
+                        print("2 = Kelvin\n")
                         UImp = int(input("Enter the number of the imperial unit that you want to convert to: "))
                         print()
                         UMet = ((UMet1 * (9/5)) + 32)
@@ -1359,3 +1246,17 @@ while True:
                             print(str(UMet1) + " celsius is " + str(UMet) + " fahrenheit.")
                         if UImp == 2:
                             print(str(UMet1) + " celsius is " + str(UMet1 + 273) + " kelvin.")
+
+
+    if calculationType == 11:
+        while True:
+            sigFig = int(input("\n\nEnter the number of significant figures that you would like to round to, or \"0\" to exit: "))
+            if sigFig == 0:
+                break
+            else:
+                sigFigNum = float(input("\nEnter the number that you would like to round: "))
+                sigFigAns = float(round(sigFigNum, sigfigs=sigFig))
+                if sigFig == 1:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figure is " + str(sigFigAns) + ".")
+                else:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figures is " + str(sigFigAns) + ".")
