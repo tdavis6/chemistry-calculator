@@ -1256,5 +1256,7 @@ while True:
             else:
                 sigFigNum = float(input("\nEnter the number that you would like to round: "))
                 sigFigAns = float(round(sigFigNum, sigfigs=sigFig))
-                print()
-                print(str(sigFigNum) + "rounded to " + str(sigFig) + "significant figures is " + str(sigFigAns) + " .")
+                if sigFig == 1:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figure is " + str(sigFigAns) + ".")
+                else:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figures is " + str(sigFigAns) + ".")
