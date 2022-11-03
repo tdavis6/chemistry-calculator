@@ -17,7 +17,7 @@ import math
 print("Chemistry Calculator")
 print("Developed by Tyler Davis")
 print("2022")
-print("Version 1.4-beta.0")
+print("Version 1.4.0")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
 #Notes:
