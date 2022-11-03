@@ -1359,3 +1359,19 @@ while True:
                             print(str(UMet1) + " celsius is " + str(UMet) + " fahrenheit.")
                         if UImp == 2:
                             print(str(UMet1) + " celsius is " + str(UMet1 + 273) + " kelvin.")
+
+    if calculationType == 11:
+        import sortedcontainers
+        import sigfig
+        from sigfig import round
+        while True:
+            sigFig = int(input("\n\nEnter the number of significant figures that you would like to round to, or \"0\" to exit: "))
+            if sigFig == 0:
+                break
+            else:
+                sigFigNum = float(input("\nEnter the number that you would like to round: "))
+                sigFigAns = float(round(sigFigNum, sigfigs=sigFig))
+                if sigFig == 1:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figure is " + str(sigFigAns) + ".")
+                else:
+                    print("\n" + str(sigFigNum) + " rounded to " + str(sigFig) + " significant figures is " + str(sigFigAns) + ".")
