@@ -1,4 +1,4 @@
-#  Copyright 2022 Tyler Davis
+#  Copyright 2023 Tyler Davis
 
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
 
 import math
 print("Chemistry Calculator")
-print("Developed by Tyler Davis")
-print("2022")
 print("Version 1.4.0")
 print()
 print("Provided under the Apache 2.0 license, found at \"https://github.com/Tornado6464/Chemistry-Calculator/blob/main/LICENSE\".")
